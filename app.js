@@ -11,16 +11,25 @@ var app = express()
 // parse application/json
 app.use(bodyParser.json())
 
-app.use(function (req, res, next) {
+app.use("/vital", function (req, res, next) {
   console.log(req.body) // populated!
   const tx = driver.Transaction.makeCreateTransaction(
     { message: req.body },
-    null,
+     {
+            datetime: new Date().toString(),
+            location: 'Maternity',
+            or: 'q10',
+            device: {
+                model: 'Philips Intellivue MP40',
+                id: '1234asbdfsg',
+            }
+        },
     [ driver.Transaction.makeOutput(
         driver.Transaction.makeEd25519Condition(alice.publicKey))],
     alice.publicKey)
   const txSigned = driver.Transaction.signTransaction(tx, alice.privateKey)
   console.log(conn.postTransactionCommit(txSigned))
+  res.send(txSigned)
   next()
 })
 
