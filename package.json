@@ -22,6 +22,7 @@
   "homepage": "https://github.com/afigar/intellitoblockchain#readme",
   "dependencies": {
     "bigchaindb-driver": "^4.1.0",
+    "body-parser": "^1.18.3",
     "express": "^4.16.4"
   }
 }
